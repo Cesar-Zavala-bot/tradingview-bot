@@ -19,43 +19,40 @@ def send_telegram_message(message):
         print(f"❌ Error enviando a Telegram: {e}")
 
 # === Endpoint principal para recibir alertas de TradingView ===
-@app.route("/alert", methods=["POST"])
+@app.route('/alert', methods=['POST'])
 def alert():
     data = request.get_json()
-
     if not data:
         return jsonify({"status": "error", "message": "No JSON recibido"}), 400
 
     symbol = data.get("symbol", "N/A")
-    action = data.get("action", "N/A").upper()
+    action = data.get("action", "N/A")
     price = float(data.get("price", 0))
 
-    # === Calcular Stop Loss y Take Profit ===
+    # Calcular TP y SL dinámicos
     if action == "BUY":
-        take_profit = round(price * 1.01, 5)  # +1%
-        stop_loss = round(price * 0.99, 5)    # -1%
+        take_profit = round(price * 1.01, 5)
+        stop_loss = round(price * 0.99, 5)
     elif action == "SELL":
         take_profit = round(price * 0.99, 5)
         stop_loss = round(price * 1.01, 5)
     else:
         take_profit = stop_loss = 0
 
-    # === Formatear mensaje ===
     mensaje = f"""
-📊 *Señal de TradingView*  
-💹 Par: `{symbol}`  
-🧭 Acción: *{action}*  
-💰 Precio actual: `{price}`  
-🎯 Take Profit: `{take_profit}`  
-🛑 Stop Loss: `{stop_loss}`  
-🕒 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+📊 *Alerta TradingView*
+💹 Par: `{symbol}`
+🧭 Acción: *{action}*
+💰 Precio: `{price}`
+🎯 Take Profit: `{take_profit}`
+🛑 Stop Loss: `{stop_loss}`
 """
 
-    # === Enviar a Telegram ===
-    send_telegram_message(mensaje.strip())
+    print("📩 Señal procesada:", mensaje)
+    send_telegram_message(mensaje)
 
-    print(f"✅ Alerta recibida: {symbol} → {action} a {price}")
-    return jsonify({"status": "ok"}), 200
+    return jsonify({"status": "ok"})
+
 
 
 if __name__ == "__main__":
