@@ -6,8 +6,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # === Configura tus credenciales de Telegram ===
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "AQUI_VA_TU_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID", "AQUI_VA_TU_CHAT_ID")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "8336480592:AAHWOaaVtlTxRGh8NDzzGSR968oBw7kNMdw")
+CHAT_ID = os.getenv("CHAT_ID", "5667629296")
 
 # === Función para enviar mensajes a Telegram ===
 def send_telegram_message(message):
