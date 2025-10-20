@@ -4,29 +4,24 @@ import os
 
 app = Flask(__name__)
 
-# === Variables de entorno ===
-TELEGRAM_TOKEN = os.getenv("8336480592:AAHWOaaVtlTxRGh8NDzzGSR968oBw7kNMdw")
-CHAT_ID = os.getenv("5667629296")
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("CHAT_ID")
 
-# === Función para enviar mensaje a Telegram ===
 def send_telegram_message(text):
+    print(f"Intentando enviar mensaje a Telegram con TOKEN={TELEGRAM_TOKEN} y CHAT_ID={CHAT_ID}")
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
         "chat_id": CHAT_ID,
         "text": text,
         "parse_mode": "Markdown"
     }
-    print(f"Intentando enviar mensaje a Telegram con TOKEN={TELEGRAM_TOKEN} y CHAT_ID={CHAT_ID}")
     try:
         response = requests.post(url, data=data)
         print(f"Telegram status: {response.status_code}, respuesta: {response.text}")
     except Exception as e:
         print(f"⚠️ Error enviando mensaje a Telegram: {e}")
 
-
-
-# === Ruta Webhook ===
-@app.route('/alert', methods=['POST'])
+@app.route("/alert", methods=["POST"])
 def alert():
     data = request.get_json()
     print("📩 Alerta recibida:", data)
@@ -44,7 +39,11 @@ def alert():
     send_telegram_message(message)
     return jsonify({"status": "ok"})
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
 # === Inicio del servidor ===
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
 
