@@ -5,14 +5,14 @@ import os
 app = Flask(__name__)
 
 # === Variables de entorno ===
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHAT_ID = os.getenv("CHAT_ID")
+TELEGRAM_TOKEN = os.getenv("8336480592:AAHWOaaVtlTxRGh8NDzzGSR968oBw7kNMdw")
+CHAT_ID = os.getenv("5667629296")
 
 # === Función para enviar mensaje a Telegram ===
 def send_telegram_message(text):
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
+    url = f"https://api.telegram.org/bot{8336480592:AAHWOaaVtlTxRGh8NDzzGSR968oBw7kNMdw}/sendMessage"
     data = {
-        "chat_id": CHAT_ID,
+        "chat_id": 5667629296,
         "text": text,
         "parse_mode": "Markdown"
     }
@@ -44,3 +44,4 @@ def alert():
 # === Inicio del servidor ===
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
