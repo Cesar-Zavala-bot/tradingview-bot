@@ -9,7 +9,7 @@ TELEGRAM_TOKEN = os.getenv("8336480592:AAHWOaaVtlTxRGh8NDzzGSR968oBw7kNMdw")
 CHAT_ID = os.getenv("5667629296")
 
 # === Función para enviar mensaje a Telegram ===
-def def send_telegram_message(text):
+def send_telegram_message(text):
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {
         "chat_id": CHAT_ID,
